@@ -14,6 +14,11 @@ public class UIFade : MonoBehaviour
         m_fIn = true;
     }
 
+    public void FadeOutUI()
+    {
+        m_fOut = true;
+    }
+
     void Update()
     {
         if(m_fIn)
@@ -42,5 +47,6 @@ public class UIFade : MonoBehaviour
             }
         }
     }
+
     
 }

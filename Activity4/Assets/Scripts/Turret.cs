@@ -46,7 +46,7 @@ public class Turret : MonoBehaviour
         {
             m_playerEnterRange?.Invoke();
         }
-
+        
     }
 }
 /*

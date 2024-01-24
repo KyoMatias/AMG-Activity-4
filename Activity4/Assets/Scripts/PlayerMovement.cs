@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -12,6 +13,8 @@ public class PlayerMovement : MonoBehaviour
     public float MoveSpeed;
     [SerializeField] private float m_PlayerHealth;
     private const float depriciation = 10f;
+
+    [SerializeField] private bool m_IsControl;
     
  
     public delegate void PlayMode();
@@ -19,11 +22,25 @@ public class PlayerMovement : MonoBehaviour
 
     public static PlayMode Initialize;
 
-    void Start()
+    public static PlayMode Live;
+
+    public static PlayMode InitControl;
+
+    public static PlayMode DisableControl;
+
+
+    void OnEnable()
     {
         Initialize += TurretInitialize;
+        Live += Controls;
+        InitControl += ControllerToggle;
+        
     }
 
+    void OnDisable()
+    {
+                InitControl -= ControllerToggle;
+    }
 
 
 
@@ -31,13 +48,30 @@ public class PlayerMovement : MonoBehaviour
     {
         m_PlayerHealth = 100;
         MoveSpeed = 10;
+        m_IsControl = false;
     }
+void ControllerToggle()
+{
+    m_IsControl = true;
+}
     // Update is called once per frame
     private void FixedUpdate()
     {
-        Controls();
+        CheckControlAvailability();
     }
 
+
+    void CheckControlAvailability()
+    {
+        if(m_IsControl)
+        {
+            Live?.Invoke();
+        }
+        CancelInvoke("Controls");
+
+
+        Debug.Log("Player Control DIsconnected");
+    }
     void Controls()
     {
         //Move Player left to right
@@ -54,6 +88,8 @@ public class PlayerMovement : MonoBehaviour
         if(Input.GetKey(KeyCode.F)){
             Debug.Log("ENTERING TURRET");
             EnterTurret?.Invoke();
+            m_IsControl = false;;
+
         }
     }
 
