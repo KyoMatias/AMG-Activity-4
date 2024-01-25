@@ -3,80 +3,61 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
+
+public enum Gamemode
+{
+  PlayerMain,
+  TurretMain,
+  CinematicMain
+
+}
+
+
 
 public class ModeSelection : MonoBehaviour
 {
-    public GameObject[] Modes;
+  [SerializeField]  private Toggle[] m_toggleGM;
+  [SerializeField] private Gamemode m_InitialGamemode;
 
-    private GameObject m1;
-    private GameObject m2;
-
-    private GameObject m3;
-
-    private GameObject m4;
-
-    private GameObject m5;
-
-     public int GamemodeNum;
+  private Gamemode _currentGameMode;
 
 
-    public delegate void ChooseGM();
-    public static ChooseGM GM1;
-    public static ChooseGM GM2;
-  void Start()
+
+
+  void Awake()
   {
-  GamemodeNum = 0;
-    GM1 += Mode1;
-
-    GM2 += Mode2;
+    _currentGameMode = m_InitialGamemode;
+    SetGameMode(_currentGameMode);
   }
 
-  void FixedUpdate()
+  public void OnToggleChanged(int toggleIndex)
   {
-    CheckGamemode();
-    
-  }
-
-void CheckGamemode()
-{
-        int Index = GamemodeNum;
-        switch(Index)
-        {
-            case 0:
-            GM1?.Invoke();
-            break;
-            
-            case 1:
-            GM2?.Invoke();
-            break;
-
-            case 2:
-            break;
-
-            case 3:
-            break;
-
-            case 4:
-            break;
-
-            default:
-            print("FATAL GAMEMODE NOT FOUND");
-            break;
-
-        
-    }
-}
-     void Mode1()
+    if(m_toggleGM[toggleIndex].isOn)
     {
+      _currentGameMode =(Gamemode)toggleIndex;
+      SetGameMode(_currentGameMode);
+    }
+  }
+
+   private void SetGameMode(Gamemode gm)
+    {
+      switch(gm)
+      {
+        case 0:
+        PlayerMovement.Live?.Invoke();
         PlayerMovement.InitControl?.Invoke();
-        Debug.Log($"GAMEMODE: {m1} Initialized");
-        
+        break;
+      }
     }
 
-    void Mode2()
+    void Update()
     {
-        Debug.Log("Controls Disabled");
+      if(Input.GetKeyDown(KeyCode.P))
+      {
+        Debug.Log($"The Current Gamemode Is: {_currentGameMode}");
+      }
     }
-
 
 }
+
