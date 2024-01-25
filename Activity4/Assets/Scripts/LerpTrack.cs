@@ -33,7 +33,7 @@ public class LerpTrack : MonoBehaviour
 
                 m_currentTime += Time.deltaTime;
                 var PercentTIme = m_currentTime /m_time;
-                var newPos = BezierCurve.QuadraticLerp(m_point0.position, m_point1.position, m_point2.position, PercentTIme);
+                var newPos = BezierCurve.LinearLerp(m_point0.position, m_point1.position, PercentTIme);
                 m_enemyRoot.position = newPos;
     }
 }

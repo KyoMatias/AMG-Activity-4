@@ -5,95 +5,96 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
+// PlayerMovement class handles player movement and control-related logic
 public class PlayerMovement : MonoBehaviour
 {
+    // Player attributes
+    [Header("Player Attributes")]
+    public float MoveSpeed; // Movement speed of the player
+    [SerializeField] private float m_PlayerHealth; // Player's health
+    private const float depriciation = 10f; // Depreciation rate for player's health
 
+    [SerializeField] private bool m_IsControl; // Flag to check if the player has control
 
-[Header("Player Attributes")]
-    public float MoveSpeed;
-    [SerializeField] private float m_PlayerHealth;
-    private const float depriciation = 10f;
-
-    [SerializeField] private bool m_IsControl;
-    
- 
+    // Delegates for game modes
     public delegate void PlayMode();
     public static PlayMode EnterTurret;
-
     public static PlayMode Initialize;
-
     public static PlayMode Live;
-
     public static PlayMode InitControl;
-
     public static PlayMode DisableControl;
 
+    // Current game mode
+    public Gamemode mode;
 
+    // Subscribe to event handlers
     void OnEnable()
     {
         Initialize += TurretInitialize;
         Live += Controls;
         InitControl += ControllerToggle;
-        
     }
 
+    // Unsubscribe from event handlers
     void OnDisable()
     {
-                InitControl -= ControllerToggle;
+        InitControl -= ControllerToggle;
     }
 
-
-
+    // Awake is called when the script is first loaded
     private void Awake()
     {
-        m_PlayerHealth = 100;
-        MoveSpeed = 10;
-        m_IsControl = false;
+        m_PlayerHealth = 100; // Initialize player health
+        MoveSpeed = 10; // Initialize movement speed
+        m_IsControl = false; // Initialize control flag
     }
-void ControllerToggle()
-{
-    m_IsControl = true;
-}
+
+    // Toggle player control
+    void ControllerToggle()
+    {
+        m_IsControl = true;
+    }
+
     // Update is called once per frame
     private void FixedUpdate()
     {
         CheckControlAvailability();
     }
 
-
+    // Check if the player has control and invoke the appropriate game mode
     void CheckControlAvailability()
     {
-        if(m_IsControl)
+        if (m_IsControl)
         {
             Live?.Invoke();
+            ModeSelection.setupPlayerMode?.Invoke();
         }
         CancelInvoke("Controls");
 
-
-        Debug.Log("Player Control DIsconnected");
+        Debug.Log("Player Control Disconnected");
     }
+
+    // Player controls for movement
     void Controls()
     {
-        //Move Player left to right
+        // Move player left to right
         float MoveX = Input.GetAxis("Horizontal") * MoveSpeed;
         transform.Translate(MoveX * Time.deltaTime, 0, 0);
 
-        //Move Player up and down
+        // Move player up and down
         float MoveY = Input.GetAxis("Vertical") * MoveSpeed;
         transform.Translate(0, 0, MoveY * Time.deltaTime);
     }
-    
-    public void TurretInitialize ()
+
+    // Initialize turret mode
+    public void TurretInitialize()
     {
-        if(Input.GetKey(KeyCode.F)){
+        if (Input.GetKey(KeyCode.F))
+        {
             Debug.Log("ENTERING TURRET");
             EnterTurret?.Invoke();
-            m_IsControl = false;;
-
+            ModeSelection.setupTurretMode?.Invoke();
+            m_IsControl = false;
         }
     }
-
-
-
 }
-
