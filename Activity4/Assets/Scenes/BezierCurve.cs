@@ -13,15 +13,17 @@ public static class BezierCurve
     /// <param name="p2">point 3</param>
     /// <param name="t"> value should be between 0 and 1</param>
     /// <returns></returns>
-    //public static Vector3 QuadraticLerp(Vector3 p0, Vector3 p1, Vector3 p2, float t) // This Function is responsible for creating the variables for the Vector3 vertices.
-    
-          /*  var clampedTime -Mathf.Clamp01(t);
-            Mathf.Pow(1 - clampedTime) * p1;
 
-    /*  These variabnles above will be used to compute the vector3 vertcies and its tracking points
-     * 
-     */
-     }
+        public static Vector3 QuadraticLerp(Vector3 p0, Vector3 p1, Vector3 p2, float t)
+    {
+        var clampedTime = Mathf.Clamp01(t);
+        var returnVector = Mathf.Pow((1 - clampedTime),2) * p0 
+            + 2 * (1 - clampedTime) * clampedTime * p1 
+            + Mathf.Pow(clampedTime, 2) * p2;
+        return returnVector;
+    }
+  
+}
     
 
 

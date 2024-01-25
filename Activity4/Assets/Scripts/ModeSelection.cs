@@ -44,9 +44,13 @@ public class ModeSelection : MonoBehaviour
     {
       switch(gm)
       {
-        case 0:
+        case Gamemode.PlayerMain:
         PlayerMovement.Live?.Invoke();
         PlayerMovement.InitControl?.Invoke();
+        break;
+
+        case Gamemode.TurretMain:
+        PlayerMovement.EnterTurret?.Invoke();
         break;
       }
     }
