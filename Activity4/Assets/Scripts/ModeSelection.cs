@@ -63,6 +63,22 @@ public static Setup setupTutorialMode;
     }
   }
 
+  private void ChangeGamemmode()
+  {
+    //Exectute scripts to toggle and select gamemodes
+    
+    /* =Gamemode Setter
+        -Gamemode Checker
+        -Gamemode Updater
+        -Lock Gamemode
+      
+      = Switch between Turret Mode, Player Mode and Tutorial Mode.
+        - Enable and Disable UI
+        - Little storyltelling scripts and function.
+
+    */
+  }
+
    public void CheckGameMode(Gamemode gm)
     {
       switch(gm)
@@ -86,6 +102,7 @@ public static Setup setupTutorialMode;
       if(Input.GetKeyDown(KeyCode.P))
       {
         Debug.Log($"The Current Gamemode Is: {_currentGameMode}");
+        // Fix this shit later at home
       }
     }
 
@@ -101,8 +118,7 @@ public static Setup setupTutorialMode;
 
     void SetupTutorialMode()
     {
-      OnToggleChanged(2);
+      OnToggleChanged(2); 
     }
-
 }
 
