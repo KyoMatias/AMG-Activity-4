@@ -80,7 +80,6 @@ public class PlayerMovement : MonoBehaviour
         if (m_IsControl)
         {
             Live?.Invoke();
-            ModeSelection.setupPlayerMode?.Invoke();
         }
         CancelInvoke("Controls");
 
@@ -106,7 +105,6 @@ public class PlayerMovement : MonoBehaviour
         {
             Debug.Log("ENTERING TURRET");
             EnterTurret?.Invoke();
-            ModeSelection.setupTurretMode?.Invoke();
             m_IsControl = false;
         }
     }

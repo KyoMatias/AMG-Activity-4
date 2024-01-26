@@ -9,9 +9,9 @@ using UnityEngine.UI;
 
 public enum Gamemode
 {
-  PlayerMain,
-  TurretMain,
-  TutorialMain
+  PlayerMain = 0,
+  TurretMain = 1,
+  TutorialMain = 2,
 
 }
 
@@ -29,45 +29,53 @@ public class ModeSelection : MonoBehaviour
   */
 
 
-  [SerializeField]  private Toggle[] m_toggleGM;
-  [SerializeField] private Gamemode m_InitialGamemode;
+  private Gamemode currentGameMode;
 
-  public Gamemode _currentGameMode;
 
-  [SerializeField] private TextMeshProUGUI getgamemmodestatus;
+  delegate int SelectMode(int value);
+  private SelectMode Player;
+  private SelectMode Turret;
+  private SelectMode Tutorial;
 
-public delegate void Setup();
-public static Setup setupPlayerMode;
-public static Setup setupTurretMode;
-
-public static Setup setupTutorialMode;
 
 
   void Awake()
   {
-    _currentGameMode = m_InitialGamemode;
-    CheckGameMode(_currentGameMode);
-    
-    setupPlayerMode = SetupPlayerMode;
-    setupTurretMode = SetupTurretMode;
-    setupTutorialMode = SetupTutorialMode;
+    ChangeGamemmode(0);
+  }
+
+
+  void FixedUpdate()
+  {
 
   }
 
-  public void OnToggleChanged(int toggleIndex)
-  {
-    if(m_toggleGM[toggleIndex].isOn)
-    {
-      _currentGameMode =(Gamemode)toggleIndex;
-      CheckGameMode(_currentGameMode);
-    }
-  }
 
-  private void ChangeGamemmode()
+  private void ChangeGamemmode(int GMValue)
   {
+    Gamemode currentGameMode = (Gamemode)GMValue;
+
+      switch(currentGameMode)
+      {
+          case Gamemode.PlayerMain:
+          Debug.Log($"Current Gamemode is : {currentGameMode}");
+          break;
+
+          case Gamemode.TurretMain:
+          Debug.Log($"Current Gamemode is : {currentGameMode}");
+          break;
+
+          case Gamemode.TutorialMain:
+          Debug.Log($"Current Gamemode is : {currentGameMode}");
+          break;
+          default:
+          break;
+        
+      }
+  
     //Exectute scripts to toggle and select gamemodes
     
-    /* =Gamemode Setter
+    /* =Gamemode Setter [/]
         -Gamemode Checker
         -Gamemode Updater
         -Lock Gamemode
@@ -79,46 +87,9 @@ public static Setup setupTutorialMode;
     */
   }
 
-   public void CheckGameMode(Gamemode gm)
-    {
-      switch(gm)
-      {
-        case Gamemode.PlayerMain:
-        PlayerMovement.Live?.Invoke();
-        PlayerMovement.InitControl?.Invoke();
-        getgamemmodestatus.text = gm.ToString();
+  private void InitializeGamemodes()
+  {
 
-        break;
-
-        case Gamemode.TurretMain:
-        PlayerMovement.EnterTurret?.Invoke();
-        getgamemmodestatus.text = gm.ToString();
-        break;
-      }
-    }
-
-    void Update()
-    {
-      if(Input.GetKeyDown(KeyCode.P))
-      {
-        Debug.Log($"The Current Gamemode Is: {_currentGameMode}");
-        // Fix this shit later at home
-      }
-    }
-
-    void SetupPlayerMode()
-    {
-      OnToggleChanged(0);
-    }
-
-    void SetupTurretMode()
-    {
-      OnToggleChanged(1);
-    }
-
-    void SetupTutorialMode()
-    {
-      OnToggleChanged(2); 
-    }
+  }
 }
 

@@ -2989,11 +2989,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bdfdbeddb6aec243ab16c203511a7bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_toggleGM:
-  - {fileID: 0}
-  m_InitialGamemode: 0
-  _currentGameMode: 0
-  getgamemmodestatus: {fileID: 1908467278}
 --- !u!1 &1810525722
 GameObject:
   m_ObjectHideFlags: 0
