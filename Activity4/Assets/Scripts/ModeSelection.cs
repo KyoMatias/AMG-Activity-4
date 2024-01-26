@@ -19,6 +19,16 @@ public enum Gamemode
 
 public class ModeSelection : MonoBehaviour
 {
+  /*
+  [IMPORTANT!] Restructure and rework the gamemode system, restructure it to have a setter and initializing parameter to Select and set the gamemode.
+
+  -Remove Toggle[] variable and replace it with a more reliable and easier method to set and create a list of Gamemodes.
+  -Replace OnToggleChanged Function to have a FixedUpdate() Parameter to check and update the Gamemode Variable what gamemode is currently set and active.
+  -Restructure and reformat the code to be more readable and prevent spaghetti code and uneven Structures.
+
+  */
+
+
   [SerializeField]  private Toggle[] m_toggleGM;
   [SerializeField] private Gamemode m_InitialGamemode;
 

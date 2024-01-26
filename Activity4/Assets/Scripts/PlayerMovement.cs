@@ -24,6 +24,19 @@ public class PlayerMovement : MonoBehaviour
     public static PlayMode InitControl;
     public static PlayMode DisableControl;
 
+    /*
+        PROF NOTES: Better to not use Static variables as they are very heavy and can cause a lot of problems on the scripts
+        Better to think of another method to reiterate a better event system without trying to use the static parameter.
+        
+        - Unity Event System []
+        - Game Mode Switch []
+        -Invoking and CancelInvoke Parameters
+        -Getter and Setter Functions.
+
+        Read On Tutorials and Youtube Videos on how to [Select Gamemode and Implementing Unity Events]
+
+    */
+
     // Current game mode
     public Gamemode mode;
 
