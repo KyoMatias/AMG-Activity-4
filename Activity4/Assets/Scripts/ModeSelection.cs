@@ -14,31 +14,19 @@ public enum Gamemode
   TutorialMain = 2,
 
 }
-
-
-
 public class ModeSelection : MonoBehaviour
 {
   /*
   [IMPORTANT!] Restructure and rework the gamemode system, restructure it to have a setter and initializing parameter to Select and set the gamemode.
-
   -Remove Toggle[] variable and replace it with a more reliable and easier method to set and create a list of Gamemodes.
   -Replace OnToggleChanged Function to have a FixedUpdate() Parameter to check and update the Gamemode Variable what gamemode is currently set and active.
-  -Restructure and reformat the code to be more readable and prevent spaghetti code and uneven Structures.
-
+  -Restructure and reformat the code to be more readable and prevent spaghetti code and uneven Structures. [/]
   */
-
-
-
  public delegate void SelectMode();
   public static SelectMode Player;
   public static SelectMode Turret;
   public static SelectMode Tutorial;
-
-
 [SerializeField] private TextMeshProUGUI getCurrentGamemode;
-
-
 
   void Awake()
   {
@@ -51,13 +39,9 @@ public class ModeSelection : MonoBehaviour
     Turret += TurretMode;
     Tutorial += TutorialMode;
   }
-
-
   void FixedUpdate()
   {
   }
-
-
   private void ChangeGamemmode(int GMValue)
   {
     Gamemode currentGameMode = (Gamemode)GMValue;
@@ -82,23 +66,9 @@ public class ModeSelection : MonoBehaviour
           break;
         
       }
-  
-    //Exectute scripts to toggle and select gamemodes
-    
-    /* =Gamemode Setter [/]
-        -Gamemode Checker
-        -Gamemode Updater
-        -Lock Gamemode
-      
-      = Switch between Turret Mode, Player Mode and Tutorial Mode.
-        - Enable and Disable UI
-        - Little storyltelling scripts and function.
-
-    */
   }
-
-
-
+  
+// Mode Functions
 void DefaultMode()
 {
   ChangeGamemmode(0);
@@ -121,3 +91,16 @@ void DefaultMode()
 
 }
 
+
+    //Exectute scripts to toggle and select gamemodes
+    
+    /* =Gamemode Setter [/]
+        -Gamemode Checker
+        -Gamemode Updater
+        -Lock Gamemode
+      
+      = Switch between Turret Mode, Player Mode and Tutorial Mode.
+        - Enable and Disable UI
+        - Little storyltelling scripts and function.
+
+    */

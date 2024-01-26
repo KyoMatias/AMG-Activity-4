@@ -57,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
     {
         m_PlayerHealth = 100; // Initialize player health
         MoveSpeed = 10; // Initialize movement speed
-        m_IsControl = false; // Initialize control flag
+        m_IsControl = true; // Initialize control flag
     }
 
     // Toggle player control
@@ -108,6 +108,7 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log("ENTERING TURRET");
             EnterTurret?.Invoke();
             ModeSelection.Turret?.Invoke();
+            TutorialLerps.StartTutorial?.Invoke();
             m_IsControl = false;
 
         }

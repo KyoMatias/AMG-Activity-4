@@ -38,8 +38,8 @@ public static class BezierCurve
         float clampedTime = Mathf.Clamp01(t);
 
         // Calculate the return vector using the linear interpolation formula
-        Vector3 returnVector = p0 * (1 - clampedTime) + p1 * clampedTime;
+        Vector3 returnVector = p0 * (1 - clampedTime) + p1 * clampedTime ;
 
-        return returnVector;
+        return returnVector; // Sets the Vector
     }
 }
