@@ -37,21 +37,19 @@ public class PlayerMovement : MonoBehaviour
 
     */
 
-    // Current game mode
-    public Gamemode mode;
 
     // Subscribe to event handlers
     void OnEnable()
     {
         Initialize += TurretInitialize;
         Live += Controls;
-        InitControl += ControllerToggle;
+        InitControl += ControllerConnect;
     }
 
     // Unsubscribe from event handlers
     void OnDisable()
     {
-        InitControl -= ControllerToggle;
+        InitControl -= ControllerConnect;
     }
 
     // Awake is called when the script is first loaded
@@ -63,9 +61,14 @@ public class PlayerMovement : MonoBehaviour
     }
 
     // Toggle player control
-    void ControllerToggle()
+    void ControllerConnect()
     {
         m_IsControl = true;
+    }
+
+    void ControllerDisconnect()
+    {
+        m_IsControl = false;
     }
 
     // Update is called once per frame
@@ -81,7 +84,6 @@ public class PlayerMovement : MonoBehaviour
         {
             Live?.Invoke();
         }
-        CancelInvoke("Controls");
 
         Debug.Log("Player Control Disconnected");
     }
@@ -105,7 +107,9 @@ public class PlayerMovement : MonoBehaviour
         {
             Debug.Log("ENTERING TURRET");
             EnterTurret?.Invoke();
+            ModeSelection.Turret?.Invoke();
             m_IsControl = false;
+
         }
     }
 }

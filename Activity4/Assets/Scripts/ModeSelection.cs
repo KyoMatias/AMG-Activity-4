@@ -29,25 +29,32 @@ public class ModeSelection : MonoBehaviour
   */
 
 
-  private Gamemode currentGameMode;
+
+ public delegate void SelectMode();
+  public static SelectMode Player;
+  public static SelectMode Turret;
+  public static SelectMode Tutorial;
 
 
-  delegate int SelectMode(int value);
-  private SelectMode Player;
-  private SelectMode Turret;
-  private SelectMode Tutorial;
+[SerializeField] private TextMeshProUGUI getCurrentGamemode;
 
 
 
   void Awake()
   {
-    ChangeGamemmode(0);
+    DefaultMode();
+  }
+
+  void Start()
+  {
+    Player += PlayerMode;
+    Turret += TurretMode;
+    Tutorial += TutorialMode;
   }
 
 
   void FixedUpdate()
   {
-
   }
 
 
@@ -59,14 +66,17 @@ public class ModeSelection : MonoBehaviour
       {
           case Gamemode.PlayerMain:
           Debug.Log($"Current Gamemode is : {currentGameMode}");
+          getCurrentGamemode.text = currentGameMode.ToString();
           break;
 
           case Gamemode.TurretMain:
           Debug.Log($"Current Gamemode is : {currentGameMode}");
+          getCurrentGamemode.text = currentGameMode.ToString();
           break;
 
           case Gamemode.TutorialMain:
           Debug.Log($"Current Gamemode is : {currentGameMode}");
+          getCurrentGamemode.text = currentGameMode.ToString();
           break;
           default:
           break;
@@ -87,9 +97,27 @@ public class ModeSelection : MonoBehaviour
     */
   }
 
-  private void InitializeGamemodes()
-  {
 
+
+void DefaultMode()
+{
+  ChangeGamemmode(0);
+}
+  void PlayerMode()
+  {
+    ChangeGamemmode(0);
   }
+
+  void TurretMode()
+  {
+    ChangeGamemmode(1);
+  }
+
+  void TutorialMode()
+  {
+    ChangeGamemmode(2);
+  }
+
+
 }
 
