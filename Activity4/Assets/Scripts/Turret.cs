@@ -10,22 +10,33 @@ public class Turret : MonoBehaviour
     [SerializeField] private float ProductThreshold ;
     public GameObject Player;
     public Transform targetRange;
+    [SerializeField] private Transform m_CursorTransform;
     PlayerMovement movescript;
     [SerializeField] private GameObject Range;
-
-
     [SerializeField] private UnityEvent m_playerEnterRange;
     [SerializeField] private UnityEvent m_playerExitRange;
+    private bool _IsActivate;
+
+    private delegate void Aim();
+    private Aim EngageAim;
 
     // Update is called once per frame
 
+
+    void Awake()
+    {
+        _IsActivate = false;
+    }
     void Start()
     {
         movescript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+        EngageAim += Aimer;
+
     }
     void FixedUpdate()
     {
         CalculateRange();
+        AimCheck();
     }
 
 
@@ -45,8 +56,27 @@ public class Turret : MonoBehaviour
         if(InRange)
         {
             m_playerEnterRange?.Invoke();
+            _IsActivate = true;
+            EngageAim?.Invoke();
         }
         
+    }
+
+    void AimCheck()
+    {
+        if(_IsActivate)
+        {
+
+        }
+
+        _IsActivate = false;
+    }
+
+void Aimer()
+    {
+    Cursor.visible = true;
+    m_CursorTransform.position = Input.mousePosition;
+
     }
 }
 /*
@@ -54,3 +84,5 @@ public class Turret : MonoBehaviour
             var RangeColor= Range.GetComponent<Renderer>();
           RangeColor.material.SetColor("_Color", Color.green);
 */
+
+
